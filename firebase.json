@@ -1,0 +1,28 @@
+{
+  "firebase": "feedforward",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/app/**",
+    "package.json",
+    "karma.conf.js",
+    "bower.json",
+    "LICENSE",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/components/**",
+  ],
+	"rewrites": [ {
+  	"source": "**",
+  	"destination": "/index.html"
+	} ],
+  "headers": [ {
+    "source" : "**/*.@(jpg|jpeg|gif|png)",
+    "headers" : [ {
+      "key" : "Cache-Control",
+      "value" : "max-age=7200"
+    } ]
+  } ]  
+}
+
