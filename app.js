@@ -6,6 +6,7 @@ angular.module('myApp', [
   'myApp.student',
   'myApp.teacher',
   'myApp.login',
+  'myApp.appfeedback',
   'firebase'
 ])
 .run(function($rootScope, $location, $firebaseAuth, $firebaseObject, FIREBASE_URL) {

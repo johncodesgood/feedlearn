@@ -11,7 +11,7 @@
     "LICENSE",
     "**/node_modules/**",
     "**/bower_components/**",
-    "**/components/**",
+    "**/components/**"
   ],
 	"rewrites": [ {
   	"source": "**",

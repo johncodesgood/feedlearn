@@ -1,0 +1,176 @@
+  <div class="container-fluid" ng-controller="HomeCtrl" set-ng-animate="false">
+    <div class="row dark_bg" style="padding-top: 2%; padding-bottom: 1%">
+        <div class="col-md-12 text-center">
+          <video class="hidden-xs" autoplay id="bgvid" preload="auto" poster="images/rooftop-image.jpg" loop>
+            <source src="images/480605803_p1.mp4" type="video/mp4">
+            <source src="images/480605803_p1.webm" type="video/webm">
+          </video>
+  <img class="visible-xs" ng-src="images/rooftop-image.jpg" id="rooftop-image" alt="Find Friends, Meet People, Join Events in NYC">
+        <br>
+    <br>
+    <h1 class="homepage-title">LOOKING TO MEET NEW PEOPLE</h1>
+      <h1 class="homepage-title" style="margin: 0px">AND JOIN FUN ACTIVITIES?</h1>
+        <p class="color-heading-orange" style="font-size: 28px; margin: 30px 0px 5px 0px; font-family: 'Open Sans', sans-serif">Great People. Fun Activities. Real Friends.</p>
+        <p style="font-size: 28px; color: white; margin: 0px; font-family: 'Open Sans', sans-serif;">Exclusively for New Yorkers in their 20's</p>
+        <p class="text-center" style="margin-top: 40px; margin-bottom: 40px"><a class="button-new btn-orange" style="font-size: 22px; padding: 20px; text-transform: none" ng-click="openSignup()" analytics-on="click" analytics-event="Homepage: Try It" analytics-category="Homepage">Try It For FREE!</a></p>
+        <br>
+        <br>
+      </div>
+      </div>
+    </div>
+  <div class="row" style="padding-top: 3%; padding-bottom: 5%; background-color: white">
+    <div class="col-md-12 text-center">
+      <h1><strong>WHY GoFind<span class="color-heading-orange">Friends?</span></strong></h1>
+    </div>
+    <div class="col-md-4 text-center" style="margin-top: 30px">
+      <h2 class="color-heading-orange"><img ng-src="images/icon-people.png" class="homepage-icon" alt="Friends and new people">Great People</h2>
+      <p class="homepage-paragraph">All members are 20-somethings in NYC</p>
+    </div>
+    <div class="col-md-4 text-center" style="margin-top: 30px">
+      <h2 class="color-heading-orange"><img ng-src="images/icon-activities.png" class="homepage-icon" alt="Events and fun activities">Fun Activities</h2>
+      <!-- <p class="homepage-paragraph">Activities range from all-member happy hours to exclusive events for small groups</p> -->
+      <p class="homepage-paragraph">Every member has an activity that you can join</p>
+    </div>
+    <div class="col-md-4 text-center" style="margin-top: 30px">
+      <h2 class="color-heading-orange"><img ng-src="images/icon-cost.png" class="homepage-icon" alt="Free">Free</h2>
+      <p class="homepage-paragraph">It's free. Give it a try!</p>
+      <p style="margin-top: 4px"><a class="btn btn-default" href="survey" role="button" analytics-on="click" analytics-event="Homepage: Cost-Sign Up" analytics-category="Homepage">Sign Up</a></p>
+    </div>
+  </div> <!-- row -->
+
+  <div class="row" style="padding-top: 3%; padding-bottom: 5%; background-color: #F5F5F3">
+    <div class="col-md-12 text-center" style="margin-bottom: 3%">
+      <h1><strong>WHAT MEMBERS SAY</strong></h1>
+    </div>
+      <div class="col-md-12 text-center">
+        <carousel interval="myInterval" disableNgAnimate>
+          <slide>
+            <div class="col-md-6 text-center" style="padding-right: 5%; padding-left: 5%; margin-top: 2%">
+              <p class="font-18"><em>“I’ve done sites like this before. I love that this one is about making actual friends, not just one time meetups.”</em><p><p class="font-16"><strong class="color-heading-orange">- Hannah</strong>&nbsp;&nbsp;<span class="font-14">(24, West Village)</span></p>
+              <br>
+              <br>
+              <p class="font-18"><em>“I like that everyone's in their 20's. No creepy old men here!”</em><p><p class="font-16"><strong class="color-heading-orange">- Olivia</strong>&nbsp;&nbsp;<span class="font-14">(21, Williamsburg)</span></p>
+            </div>
+            <div class="col-md-6 text-center" style="padding-right: 5%; padding-left: 5%">
+              <img ng-src="images/ncf1.jpg" style="margin:auto; border-radius: 5px" alt="People having fun">
+            </div>
+          </slide>
+          <slide>
+            <div class="col-md-6 text-center" style="padding-right: 5%; padding-left: 5%; margin-top: 2%">
+              <p class="font-18"><em>“My group of friends in NYC keeps shrinking so it's great to have an easy way to make new ones.”</em></p><p class="font-16"><strong class="color-heading-orange">- Logan</strong>&nbsp;&nbsp;<span class="font-14">(26, Fort Greene)</span></p>
+              <br>
+              <br> 
+              <p class="font-18"><em>“I met three other women and we hit it off right away! We still hang out to this day.”</em></p><p class="font-18"><strong class="color-heading-orange">- Emma</strong>&nbsp;&nbsp;<span class="font-14">(25, Upper East Side)</span></p>
+            </div>
+            <div class="col-md-6 text-center" style="padding-right: 5%; padding-left: 5%"> 
+              <img ng-src="images/ncf2.jpg" style="margin:auto; border-radius: 5px" alt="Friends hanging out at event">
+            </div>
+          </slide>
+        </carousel>
+      </div>
+  </div> <!-- row -->
+  
+  <div class="row" style="padding-top: 3%; padding-bottom: 5%; background-color: #5B5950">
+    <div class="col-md-12 text-center" style="margin-bottom: 3%">
+      <h1 style="color: white"><strong>HOW IT WORKS</strong></h1>
+    </div>
+    <div class="col-md-3 text-center">
+      <img ng-src="images/signup.png" class="howitworks-icon">
+      <h3 class="color-heading-orange">1. Sign Up</h3>
+      <p class="howitworks-paragraph">Answer a few questions about yourself</p>
+    </div>
+    <div class="col-md-3 text-center">
+      <img ng-src="images/people.png" class="howitworks-icon">
+      <!-- <h3 class="color-heading-orange">2. Get Matched Up</h3>
+      <p class="howitworks-paragraph">We'll find small groups of people you'll like and invite you to exclusive activities with them</p> -->
+      <h3 class="color-heading-orange">2. Find People You Like</h3>
+      <p class="howitworks-paragraph">We'll find people we think you'll get along with</p>
+    </div>
+    <div class="col-md-3 text-center">
+      <img ng-src="images/activities.png" class="howitworks-icon">
+      <!-- <h3 class="color-heading-orange">3. Join Activities</h3>
+      <p class="howitworks-paragraph">You'll also be invited to our weekly All Member activities</p> -->
+      <h3 class="color-heading-orange">3. Join Activities</h3>
+      <p class="howitworks-paragraph">Request to join the activities of people you like</p>
+    </div>
+    <div class="col-md-3 text-center">
+      <img ng-src="images/message.png" class="howitworks-icon">
+      <h3 class="color-heading-orange">4. Message People</h3>
+      <p class="howitworks-paragraph">Message people to get to know them better</p>
+    </div>
+  </div>
+  <div class="row" style="padding-top: 3%; padding-bottom: 5%" id="homepage-about-us">
+    <div class="col-md-12 text-center" style="margin-bottom: 3%">
+      <h1><strong>ABOUT US</strong></h1>
+    </div>
+    <div class="col-md-1">
+    </div>
+      <div class="col-md-5" style="padding-left: 4%; padding-right: 4%; vertical-align: middle">
+        <p class="text-center" style="font-size: 16px; padding-top: 20px; padding-left: 10px; padding-right: 10px"><strong>GoFind<span class="color-heading-orange">Friends</span></strong> was founded by friends <strong>Peter</strong> and <strong>John</strong>.</p>
+        <p class="text-center" style="font-size: 16px; padding-left: 10px; padding-right: 10px">When moving to New York City they both learned that <strong>making new friends in this huge megalopolis is really hard!</strong></p>
+        <p class="text-center" style="font-size: 16px; padding-left: 10px; padding-right: 10px">They thought there had to be a better way to meet cool, interesting people.</p>
+        <p class="text-center" style="font-size: 16px; padding-left: 10px; padding-right: 10px">So they created <strong>GoFind<span class="color-heading-orange">Friends</span></strong> to make it easier for you to <strong>meet new people and do fun things!</strong></p>
+      </div>
+      <div class="col-md-2 text-center" style="padding-top: 3%">
+        <img ng-src="images/peter-profile-pic-contrast.jpg" width="166px" height="166px" style="-webkit-filter: sepia(20%) brightness(120%); border-radius: 5px">
+        <h4 style="padding-top: 10px">Peter</h4>
+      </div> <!-- /col-md-6 -->
+      <div class="col-md-3 text-center" style="padding-top: 3%">
+        <img ng-src="images/john-profile-pic-contrast.jpg" width="166px" height="166px" style="-webkit-filter: sepia(20%) brightness(100%); border-radius: 5px">
+        <h4 style="padding-top: 10px">John</h4>
+      </div> <!-- /col-md-6 -->
+    </div>
+  </div> <!-- /container -->
+</div>
+
+  <div class="row" style="padding-top: 4%; padding-bottom: 4%; background-color: #5B5950; color: white">
+    <div class="col-md-12 text-center" style="margin-bottom: 4%">
+      <h1 class="color-heading-orange"><strong>CONTACT US</strong></h1>
+    </div>
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-3 col-xs-12 text-center" style="padding-bottom: 2%">
+      <p class="font-20">GoFindFriends, LLC</p>
+      <p class="font-16">100 Park Avenue</p>
+      <p class="font-16">New York, NY 10017</p>
+      <p class="font-16">(443) 457-8135</p>
+      <p class="font-16">info@gofindfriends.com</p>
+    </div>
+    <div class="col-sm-6 col-xs-12 text-center">
+      <form role="form" class="form-horizontal text-center" name="contactUs" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : contactUs.name.$invalid && submitted }">
+          <div class="col-md-8 col-sm-9 col-xs-12" style="padding-left: 40px; padding-right: 40px">
+            <input class="form-control" placeholder="Name" name="name" ng-model="contactUsInfo.name" required>
+            <p ng-show="contactUs.name.$invalid && submitted" class="help-block">Your name is required</p>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : contactUs.email.$invalid && submitted }">
+          <div class="col-md-8 col-sm-9 col-xs-12" style="padding-left: 40px; padding-right: 40px">
+            <input type="email" class="form-control" id="email" placeholder="Email" name="email" ng-model="contactUsInfo.email" required >
+            <p ng-show="contactUs.email.$invalid && submitted" class="help-block">Enter a valid email address</p>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : contactUs.subject.$invalid && submitted }">
+          <div class="col-md-8 col-sm-9 col-xs-12" style="padding-left: 40px; padding-right: 40px">
+            <input class="form-control" placeholder="Subject" name="subject" ng-model="contactUsInfo.subject" required>
+            <p ng-show="contactUs.subject.$invalid && submitted" class="help-block">Subject is required</p>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : contactUs.message.$invalid && submitted }">
+          <div class="col-md-8 col-sm-9 col-xs-12" style="padding-left: 40px; padding-right: 40px">
+            <textarea class="form-control" placeholder="Message" name="message" ng-model="contactUsInfo.message" rows="3" required></textarea>
+            <p ng-show="contactUs.message.$invalid && submitted" class="help-block">Message is required</p>
+          </div>
+        </div>
+        <div class="form-group padding-left-10" ng-class="{ 'has-error' : contactUs.$invalid && submitted }">
+          <div class="col-md-8 col-sm-9 col-xs-12"> 
+        <button type="submit" class="button-new btn-orange" ng-click="submitContactUs()" style="margin-left: 6px">Submit</button>
+        <br>
+        <p ng-show="contactUs.$invalid && submitted" class="help-block error-red" style="margin-top: 20px">There are errors in the form!</p>
+        <p ng-show="submittedSuccess" class="help-block success-green" style="margin-top: 20px">Message succesfully sent!</p>
+      </div>
+      </form>        
+    </div>
+  </div>
+</div>
+</div> <!-- /container-fluid -->

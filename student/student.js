@@ -99,8 +99,10 @@ angular.module('myApp.student', ['ngRoute'])
   };
 
   $scope.questionUpVote = function(questionIndex) {
-    $scope.questions[questionIndex].votes++; 
-    $scope.questions[questionIndex].userVotes[$scope.userID] = true;
-    $scope.questions.$save(questionIndex);
+    if (!$scope.questions[questionIndex].userVotes[$scope.userID] && !($scope.questions[questionIndex].user == $scope.userID)) {
+      $scope.questions[questionIndex].votes++; 
+      $scope.questions[questionIndex].userVotes[$scope.userID] = true;
+      $scope.questions.$save(questionIndex);
+    };
   };
 });
