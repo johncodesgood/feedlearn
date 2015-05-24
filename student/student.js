@@ -188,9 +188,15 @@ angular.module('myApp.student', ['ngRoute'])
       hours = hours ? hours : 12; // the hour '0' should be '12'
       minutes = minutes < 10 ? '0'+minutes : minutes;
       var timestr = hours + ':' + minutes + ' ' + ampm;
+	  var userID = $scope.userID;
       var newQuestion = {
-        user: $scope.userID, date: timestr, votes: 0, content: $scope.question, userVotes: {test: "test"}
+        //user: $scope.userID, date: timestr, votes: 0, content: $scope.question, userVotes: {test: "test"}
+        user: $scope.userID, date: timestr, votes: 1, content: $scope.question, 
+		userVotes: {test: "test"}
       }; 
+      newQuestion.userVotes[$scope.userID] = true;	// include questioner as a voter 
+								// so if everyone downvotes this question then it will disappear!
+
       $scope.questions.$add(newQuestion);
       // $scope.questions.$add(newQuestion).then(function(ref) {
       //   var questionKey = ref.key();
@@ -207,7 +213,7 @@ angular.module('myApp.student', ['ngRoute'])
 
   $scope.questionUpVote = function(questionIndex) 
   {
-    if (!($scope.questions[questionIndex].user == $scope.userID)) // cannot upvote your question
+    //if (!($scope.questions[questionIndex].user == $scope.userID)) // cannot upvote your question
 	{
 	  var voteType = "upvote";
       if (!$scope.questions[questionIndex].userVotes[$scope.userID])  // currently not voted on

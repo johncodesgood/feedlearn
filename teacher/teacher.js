@@ -77,8 +77,9 @@ angular.module('myApp.teacher', ['ngRoute'])
       minutes = minutes < 10 ? '0'+minutes : minutes;
       var timestr = hours + ':' + minutes + ' ' + ampm;
       var newQuestion = {
-        user: $scope.userID, date: timestr, votes: 0, content: $scope.question, userVotes: {test: "test"}
+        user: $scope.userID, date: timestr, votes: 1, content: $scope.question, userVotes: {test: "test"}
       };
+	  newQuestion.userVotes[$scope.userID] = true;
       $scope.questions.$add(newQuestion);
       $scope.question = "";
       $scope.currentLog.push(newQuestion); 
