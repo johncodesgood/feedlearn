@@ -10,14 +10,14 @@ angular.module('myApp.appfeedback', ['ngRoute'])
   $locationProvider.html5Mode(true);
 })
 
-.controller('AppFeedbackCtrl', function($scope, FIREBASE_URL, $modal) {
-	$scope.myInterval = 3000;
+.controller('AppFeedbackCtrl', function($scope, FIREBASE_URL) {
 
 	var ref = new Firebase(FIREBASE_URL);
 	$scope.submitted = false;
   $scope.submittedSuccess = false;
 
 	$scope.submitContactUs = function() {
+    $scope.submittedSuccess = false;
 		if (!$scope.contactUs.$valid) {
         $scope.submitted = true;
     } else {

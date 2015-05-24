@@ -37,7 +37,7 @@
         <div ng-if="!currentUser">
           <div id="navbar" class="navbar-collapse navbar-right" ng-class="{collapse: isCollapsed}">
             <ul class="nav navbar-nav">
-              <li><a href="" ng-click="openLogin()" style="font-size: 14px; padding: 14px 0px">&nbsp;&nbsp;&nbsp;Login</a></li>
+              <li><a href="" ng-click="openLogin()" style="font-size: 14px; padding: 14px 14px">Login</a></li>
             </ul>          
           </div>
         </div>
@@ -45,8 +45,9 @@
          <div ng-if="currentUser">
           <div id="navbar" class="navbar-collapse navbar-right" ng-class="{collapse: isCollapsed}">
             <ul class="nav navbar-nav">
-              <li><a href="/student" style="font-size: 14px; padding: 14px 14px">Home</a></li>
-              <li><a href="/appfeedback" style="font-size: 14px; padding: 14px 14px">Feedback</a></li>
+              <li><a ng-href="/" style="font-size: 14px; padding: 14px 14px">Home</a></li>
+              <li><a ng-href="/{{ teacherOrStudent }}" style="font-size: 14px; padding: 14px 14px">Live Feed</a></li>
+              <li><a href="/appfeedback" style="font-size: 14px; padding: 14px 14px">Contact Us</a></li>
               <li><a href="" ng-click="logout()" style="font-size: 14px; padding: 14px 14px">Logout</a></li>
             </ul>          
           </div>
@@ -67,6 +68,7 @@
   <script src="student/student.js"></script>
   <script src="teacher/teacher.js"></script>
   <script src="login/login.js"></script>
+  <script src="question/question.js"></script>
   <script src="appfeedback/appfeedback.js"></script>
 </body>
 </html>

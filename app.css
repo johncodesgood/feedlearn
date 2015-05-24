@@ -806,13 +806,28 @@ a.link-orange-highlight:link,
 a.link-orange-highlight:visited,
 a.link-orange-highlight:active {
   text-decoration: none;
-  color: #5B5951;
+  color: #A4A4A4;
 }
 
 a.link-orange-highlight:hover {
   text-decoration: none;
   color: #EE8C24;
 }
+
+
+
+a.link-green-highlight:link,
+a.link-green-highlight:visited,
+a.link-green-highlight:active {
+  text-decoration: none;
+  color: #A4A4A4;
+}
+
+a.link-green-highlight:hover {
+  text-decoration: none;
+  color: #31C28D;
+}
+
 
 a.link-orange-highlight-bold:link,
 a.link-orange-highlight-bold:visited,

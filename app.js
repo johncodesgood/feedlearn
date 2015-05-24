@@ -6,6 +6,7 @@ angular.module('myApp', [
   'myApp.student',
   'myApp.teacher',
   'myApp.login',
+  'myApp.question',
   'myApp.appfeedback',
   'firebase'
 ])
@@ -24,8 +25,10 @@ angular.module('myApp', [
     if (authData) {
       $rootScope.currentUser = authData;
       if (authData.uid == "google:110137350934623881673") {
+        $rootScope.teacherOrStudent = "teacher";
         $location.path('/teacher');
       } else {
+        $rootScope.teacherOrStudent = "student";
         $location.path('/student');
       }; 
     } else {
