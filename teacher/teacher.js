@@ -60,7 +60,7 @@ angular.module('myApp.teacher', ['ngRoute'])
   };
 
   $scope.deleteQuestions = function() {
-    $scope.questions = $firebaseArray(ref.child('questions'));
+    $scope.questions = $firebaseArray(ref.child('questions').orderByChild("votes"));
     $scope.removeQuestions = true;
   };
 
