@@ -38,6 +38,8 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.smileys.$save();
     var refQuestions = new Firebase(FIREBASE_URL + 'questions');
     refQuestions.remove();
+    var removeUserSmileysRef = ref.child('userSmileys');
+    removeUserSmileysRef.set({test: "test"});
     var refCurrentLog = new Firebase(FIREBASE_URL + 'currentlog');
     refCurrentLog.once('value', function(logSnapshot) {
       var logData = logSnapshot.val();

@@ -21,71 +21,147 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.questions = $firebaseArray(ref.child('questions').limitToLast(40));
   $scope.smileys = $firebaseObject(ref.child('smileys'));
   $scope.currentLog = ref.child('currentlog');
+  $scope.userSmiley = $firebaseObject(ref.child('userSmileys'));
 
 
   $scope.selectSmileyCool = function() {
-    if (!$scope.waitSmileyCool) {
-      $scope.waitSmileyCool = true;
+    if ($scope.userSmiley[$scope.userID]) {
+      switch ($scope.userSmiley[$scope.userID]) {
+        case "cool":
+          $scope.smileys.sumCool--;
+          $scope.userSmiley[$scope.userID] = null;
+          break;
+        case "sad":
+          $scope.smileys.sumSad--;
+          $scope.userSmiley[$scope.userID] = "cool";
+          $scope.smileys.sumCool++;
+          break;
+        case "lost":
+          $scope.smileys.sumLost--;
+          $scope.userSmiley[$scope.userID] = "cool";
+          $scope.smileys.sumCool++;
+          break;
+        case "asleep":
+          $scope.smileys.sumAsleep--;
+          $scope.userSmiley[$scope.userID] = "cool";
+          $scope.smileys.sumCool++;
+          break;
+      };
+    } else {
+      $scope.userSmiley[$scope.userID] = "cool";
       $scope.smileys.sumCool++;
-      $scope.smileys.$save();
-      var currentDateBeforeString = new Date();
-      var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, smiley: "cool", totalNum: $scope.smileys.sumCool});
-      $timeout(deselectSmileyCool, 60000);
     };
+    $scope.smileys.$save();
+    $scope.userSmiley.$save();
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, smiley: "cool", totalNum: $scope.smileys.sumCool});
   };
 
-  function deselectSmileyCool() {
-      $scope.waitSmileyCool = false;
-  };
 
   $scope.selectSmileySad = function() {
-    if (!$scope.waitSmileySad) {
-      $scope.waitSmileySad = true;
+    if ($scope.userSmiley[$scope.userID]) {
+      switch ($scope.userSmiley[$scope.userID]) {
+        case "cool":
+          $scope.smileys.sumCool--;
+          $scope.userSmiley[$scope.userID] = "sad";
+          $scope.smileys.sumSad++;
+          break;
+        case "sad":
+          $scope.smileys.sumSad--;
+          $scope.userSmiley[$scope.userID] = null;
+          break;
+        case "lost":
+          $scope.smileys.sumLost--;
+          $scope.userSmiley[$scope.userID] = "sad";
+          $scope.smileys.sumSad++;
+          break;
+        case "asleep":
+          $scope.smileys.sumAsleep--;
+          $scope.userSmiley[$scope.userID] = "sad";
+          $scope.smileys.sumSad++;
+          break;
+      };
+    } else {
+      $scope.userSmiley[$scope.userID] = "sad";
       $scope.smileys.sumSad++;
-      $scope.smileys.$save();
-      var currentDateBeforeString = new Date();
-      var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, smiley: "sad", totalNum: $scope.smileys.sumSad});
-      $timeout(deselectSmileySad, 60000);
     };
+    $scope.smileys.$save();
+    $scope.userSmiley.$save();
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, smiley: "sad", totalNum: $scope.smileys.sumSad});
   };
 
-  function deselectSmileySad() {
-      $scope.waitSmileySad = false;
-  };
 
   $scope.selectSmileyLost = function() {
-    if (!$scope.waitSmileyLost) {
-      $scope.waitSmileyLost = true;
+    if ($scope.userSmiley[$scope.userID]) {
+      switch ($scope.userSmiley[$scope.userID]) {
+        case "cool":
+          $scope.smileys.sumCool--;
+          $scope.userSmiley[$scope.userID] = "lost";
+          $scope.smileys.sumLost++;
+          break;
+        case "sad":
+          $scope.smileys.sumSad--;
+          $scope.userSmiley[$scope.userID] = "lost";
+          $scope.smileys.sumLost++;
+          break;
+        case "lost":
+          $scope.smileys.sumLost--;
+          $scope.userSmiley[$scope.userID] = null;
+          break;
+        case "asleep":
+          $scope.smileys.sumAsleep--;
+          $scope.userSmiley[$scope.userID] = "lost";
+          $scope.smileys.sumLost++;
+          break;
+      };
+    } else {
+      $scope.userSmiley[$scope.userID] = "lost";
       $scope.smileys.sumLost++;
-      $scope.smileys.$save();
-      var currentDateBeforeString = new Date();
-      var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, smiley: "lost", totalNum: $scope.smileys.sumLost});
-      $timeout(deselectSmileyLost, 60000);
     };
-  };
-
-  function deselectSmileyLost() {
-      $scope.waitSmileyLost = false;
+    $scope.smileys.$save();
+    $scope.userSmiley.$save();
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, smiley: "lost", totalNum: $scope.smileys.sumLost});
   };
 
   $scope.selectSmileyAsleep = function() {
-    if (!$scope.waitSmileyAsleep) {
-      $scope.waitSmileyAsleep = true;
+    if ($scope.userSmiley[$scope.userID]) {
+      switch ($scope.userSmiley[$scope.userID]) {
+        case "cool":
+          $scope.smileys.sumCool--;
+          $scope.userSmiley[$scope.userID] = "asleep";
+          $scope.smileys.sumAsleep++;
+          break;
+        case "sad":
+          $scope.smileys.sumSad--;
+          $scope.userSmiley[$scope.userID] = "asleep";
+          $scope.smileys.sumAsleep++;
+          break;
+        case "lost":
+          $scope.smileys.sumLost--;
+          $scope.userSmiley[$scope.userID] = "asleep";
+          $scope.smileys.sumAsleep++;
+          break;
+        case "asleep":
+          $scope.smileys.sumAsleep--;
+          $scope.userSmiley[$scope.userID] = null;
+          break;
+      };
+    } else {
+      $scope.userSmiley[$scope.userID] = "asleep";
       $scope.smileys.sumAsleep++;
-      $scope.smileys.$save();
-      var currentDateBeforeString = new Date();
-      var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
-      $timeout(deselectSmileyAsleep, 60000);
     };
+    $scope.smileys.$save();
+    $scope.userSmiley.$save();
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
   };
 
-  function deselectSmileyAsleep() {
-      $scope.waitSmileyAsleep = false;
-  };
 
   $scope.sortByVotes = function() {
     $scope.questions = $firebaseArray(ref.child('questions').orderByChild("votes").limitToLast(40));
