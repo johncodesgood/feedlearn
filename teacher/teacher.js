@@ -28,6 +28,8 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.smileys.sumLost = 0;
     $scope.smileys.sumAsleep = 0;
     $scope.smileys.$save();
+    var removeUserSmileysRef = ref.child('userSmileys');  // make all kids smiles go away
+    removeUserSmileysRef.set({test: "test"});
   };
 
   $scope.clearAllData = function() {
@@ -83,14 +85,23 @@ angular.module('myApp.teacher', ['ngRoute'])
     };
   };
 
-  $scope.questionUpVote = function(questionIndex) {
-    if (!($scope.questions[questionIndex].user == $scope.userID)) {
-      if (!$scope.questions[questionIndex].userVotes[$scope.userID]) {
+  $scope.questionUpVote = function(questionIndex) 
+  {
+	//debugger;
+    //if (!($scope.questions[questionIndex].user == $scope.userID)) // teacher cannot upvote question they wrote. allow this!
+	{
+	  var voteType = "upvote";
+      if (!$scope.questions[questionIndex].userVotes[$scope.userID]) // teacher hasn't upvoted this yet
+	  {
         $scope.questions[questionIndex].votes++; 
         $scope.questions[questionIndex].userVotes[$scope.userID] = true;
         $scope.questions.$save(questionIndex);
-      } else {
+      } 
+	  else // otherwise a downvote
+	  {
+		voteType = "downvote";
         $scope.questions[questionIndex].votes--;
+        $scope.questions[questionIndex].userVotes[$scope.userID] = false;
         $scope.questions.$save(questionIndex);
         var ref = new Firebase(FIREBASE_URL);
         var removeUpvoteRef = ref.child('questions').child($scope.questions[questionIndex].$id).child('userVotes').child($scope.userID);
@@ -98,7 +109,7 @@ angular.module('myApp.teacher', ['ngRoute'])
       };
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes});
+      $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes} );
     };
   };
 

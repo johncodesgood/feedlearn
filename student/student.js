@@ -205,13 +205,20 @@ angular.module('myApp.student', ['ngRoute'])
     };
   };
 
-  $scope.questionUpVote = function(questionIndex) {
-    if (!($scope.questions[questionIndex].user == $scope.userID)) {
-      if (!$scope.questions[questionIndex].userVotes[$scope.userID]) {
+  $scope.questionUpVote = function(questionIndex) 
+  {
+    if (!($scope.questions[questionIndex].user == $scope.userID)) // cannot upvote your question
+	{
+	  var voteType = "upvote";
+      if (!$scope.questions[questionIndex].userVotes[$scope.userID])  // currently not voted on
+	  {
         $scope.questions[questionIndex].votes++; 
         $scope.questions[questionIndex].userVotes[$scope.userID] = true;
         $scope.questions.$save(questionIndex);
-      } else {
+      } 
+	  else  // I upvoted it, so now downvote it
+	  {
+		voteType = "downvote";
         $scope.questions[questionIndex].votes--;
         $scope.questions.$save(questionIndex);
         var ref = new Firebase(FIREBASE_URL);
@@ -220,7 +227,7 @@ angular.module('myApp.student', ['ngRoute'])
       };
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
-      $scope.currentLog.push({date: currentDate, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes});
+      $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes});
     };
   };
 
