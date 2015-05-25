@@ -55,7 +55,7 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userSmiley.$save();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, smiley: "cool", totalNum: $scope.smileys.sumCool});
+    $scope.currentLog.push({date: currentDate, action: "smileyClick", user: $scope.userID, smiley: "cool", totalNum: $scope.smileys.sumCool});
   };
 
 
@@ -90,7 +90,7 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userSmiley.$save();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, smiley: "sad", totalNum: $scope.smileys.sumSad});
+    $scope.currentLog.push({date: currentDate, action: "smileyClick", user: $scope.userID, smiley: "sad", totalNum: $scope.smileys.sumSad});
   };
 
 
@@ -125,7 +125,7 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userSmiley.$save();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, smiley: "lost", totalNum: $scope.smileys.sumLost});
+    $scope.currentLog.push({date: currentDate, action: "smileyClick", user: $scope.userID, smiley: "lost", totalNum: $scope.smileys.sumLost});
   };
 
   $scope.selectSmileyAsleep = function() {
@@ -159,7 +159,7 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userSmiley.$save();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
+    $scope.currentLog.push({date: currentDate, action: "smileyClick", user: $scope.userID, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
   };
 
 
@@ -207,6 +207,8 @@ angular.module('myApp.student', ['ngRoute'])
       //   userRef.update(keyAndQuestion);
       // });
       $scope.question = "";
+	  newQuestion["action"] = "newQuestion";
+	  newQuestion["user"] = $scope.userID;
       $scope.currentLog.push(newQuestion); 
     };
   };
@@ -244,7 +246,7 @@ angular.module('myApp.student', ['ngRoute'])
     removeQuestionRef.remove();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, question: $scope.questions[questionIndex].content, removedBy: "student"});
+    $scope.currentLog.push({date: currentDate, action: "removeQuestion", user: $scope.userID, question: $scope.questions[questionIndex].content, removedBy: "student"});
   };
 
 });
