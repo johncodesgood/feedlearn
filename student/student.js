@@ -236,6 +236,13 @@ angular.module('myApp.student', ['ngRoute'])
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
       $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes});
+		// remove question if zero people interested
+		var numVotes = $scope.questions[questionIndex].votes;
+        if (numVotes == 0)
+        {
+        	var removeQuestionRef = ref.child('questions').child($scope.questions[questionIndex].$id);
+        	removeQuestionRef.remove();
+        }
     };
   };
 

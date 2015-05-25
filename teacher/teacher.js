@@ -107,6 +107,13 @@ angular.module('myApp.teacher', ['ngRoute'])
         var ref = new Firebase(FIREBASE_URL);
         var removeUpvoteRef = ref.child('questions').child($scope.questions[questionIndex].$id).child('userVotes').child($scope.userID);
         removeUpvoteRef.remove();
+		// remove question if zero people interested
+		var numVotes = $scope.questions[questionIndex].votes;
+        if (numVotes == 0)
+        {
+        	var removeQuestionRef = ref.child('questions').child($scope.questions[questionIndex].$id);
+        	removeQuestionRef.remove();
+        }
       };
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
