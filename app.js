@@ -116,6 +116,7 @@ angular.module('myApp', [
     userSmileyRef.once('value', function(userSmileySnapshot) 
       {
         var val = userSmileySnapshot.val();
+        debugger;
         switch (val) 
         {
           case "cool":
