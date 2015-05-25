@@ -19,7 +19,7 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.userID = currentAuth.uid;
 	var ref = new Firebase(FIREBASE_URL);
   $scope.questions = $firebaseArray(ref.child('questions').limitToLast(40));
-  $scope.smileys = $firebaseObject(ref.child('smileys'));
+  // $scope.smileys = $firebaseObject(ref.child('smileys'));
   $scope.currentLog = ref.child('currentlog');
   $scope.userSmiley = $firebaseObject(ref.child('userSmileys'));
 

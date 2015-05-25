@@ -24,6 +24,7 @@ angular.module('myApp', [
     console.log("Auth listener: Called");
     if (authData) {
       $rootScope.currentUser = authData;
+      $rootScope.smileys = $firebaseObject(ref.child('smileys'));
       if (authData.uid == "google:110137350934623881673") {
         $rootScope.teacherOrStudent = "teacher";
         $location.path('/teacher');
@@ -89,7 +90,7 @@ angular.module('myApp', [
   $scope.$on('LOAD', function(){$scope.loading = true});
   $scope.$on('UNLOAD', function(){$scope.loading = false});
 })
-.controller("NavCtrl", function($scope, $location, $firebaseAuth, Authentication, $log, FIREBASE_URL, $modal) {
+.controller("NavCtrl", function($scope, $location, $firebaseAuth, $firebaseObject, Authentication, $log, FIREBASE_URL, $modal) {
   $scope.isCollapsed = true;
 
   $scope.$on('$routeChangeSuccess', function () {
@@ -107,7 +108,38 @@ angular.module('myApp', [
     });
   };
 
-  $scope.logout = function() {
+  $scope.logout = function() 
+  {
+    var userID = $scope.currentUser.uid;
+    var ref = new Firebase(FIREBASE_URL);
+    var userSmileyRef = ref.child('userSmileys').child(userID);
+    userSmileyRef.once('value', function(userSmileySnapshot) 
+      {
+        var val = userSmileySnapshot.val();
+        switch (val) 
+        {
+          case "cool":
+            $scope.smileys.sumCool--;
+            userSmileyRef.remove();
+            $scope.smileys.$save();
+            break;
+          case "sad":
+            $scope.smileys.sumSad--;
+            userSmileyRef.remove();
+            $scope.smileys.$save();
+            break;
+          case "lost":
+            $scope.smileys.sumLost--;
+            userSmileyRef.remove();
+            $scope.smileys.$save();
+            break;
+          case "asleep":
+            $scope.smileys.sumAsleep--;
+            userSmileyRef.remove();
+            $scope.smileys.$save();
+            break;
+        };
+      });
     Authentication.logout();
   };
 
