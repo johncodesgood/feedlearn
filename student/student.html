@@ -34,13 +34,18 @@
         <div class="col-xs-12" style="height: 240px; overflow: auto" scroll="questions">
           <p ng-if="!questions[0] && !yourQuestions" style="color: #A4A4A4; margin: 10px 0px 0px 10px">Be the first to ask a question!</p>
           <table class="table table-striped">
-            <tr ng-cloak ng-repeat="question in questions" style="text-align: left">
+            <tr ng-cloak ng-repeat="question in questions" ng-if="yourQuestions || (!yourQuestions && question.flagged != true)" style="text-align: left">
               <td class="col-xs-9" style="vertical-align: middle">
                 <p style="margin: 0px">{{question.content}}</p>
                 <p style="margin: 0px; color: #A4A4A4; font-size: 12px">{{ question.date}}</p>
               </td>
               <td ng-if="yourQuestions" class="col-xs-1" style="vertical-align: middle">
-                <a href="" ng-click="questionRemove($index)"><span class="glyphicon glyphicon-remove" style="color: #DF7345; font-size: 16px"></span></a>
+				<div ng-if="question.flagged == true">
+			       <div class="glyphicon glyphicon-flag" style="color: #A4A4A4; font-size: 16px;"> </div>
+				</div>
+				<div ng-if="question.flagged != true">
+                  <a href="" ng-click="questionRemove($index)"><span class="glyphicon glyphicon-remove" style="color: #DF7345; font-size: 16px"></span></a>
+				</div>
               </td>
               <td class="col-xs-1" style="vertical-align: middle">
                 <a href="" ng-href="/question/{{ question.$id }}" class="link-green-highlight"><span class="glyphicon glyphicon-edit" style="color: #A4A4A4; font-size: 16px"></span></a>

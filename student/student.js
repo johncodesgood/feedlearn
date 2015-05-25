@@ -238,7 +238,8 @@ angular.module('myApp.student', ['ngRoute'])
       $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: $scope.questions[questionIndex].content, votes: $scope.questions[questionIndex].votes});
 		// remove question if zero people interested
 		var numVotes = $scope.questions[questionIndex].votes;
-        if (numVotes == 0)
+		var isFlagged = $scope.questions[questionIndex].flagged;
+        if (numVotes == 0 && !isFlagged)
         {
         	var removeQuestionRef = ref.child('questions').child($scope.questions[questionIndex].$id);
         	removeQuestionRef.remove();
@@ -250,6 +251,7 @@ angular.module('myApp.student', ['ngRoute'])
     var questionID = $scope.questions[questionIndex].$id;
     var ref = new Firebase(FIREBASE_URL);
     var removeQuestionRef = ref.child('questions').child(questionID);
+    var isFlagged = ref.child('questions').child(questionID).flagged;
     removeQuestionRef.remove();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();

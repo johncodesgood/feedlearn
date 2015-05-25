@@ -131,4 +131,15 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.currentLog.push({date: currentDate, question: $scope.questions[questionIndex].content, removedBy: "teacher"});
   };
 
+  $scope.flagQuestion = function(questionIndex) {
+    var questionID = $scope.questions[questionIndex].$id;
+    var ref = new Firebase(FIREBASE_URL);
+    var flagQuestionRef = ref.child('questions').child(questionID);
+    //removeQuestionRef.remove();
+	$scope.questions[questionIndex].flagged = true;
+    $scope.questions.$save(questionIndex);
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, action: "flag", user: $scope.userID, question: $scope.questions[questionIndex].content, questioner: $scope.questions[questionIndex].user, flaggedBy: "teacher"});
+  };
 });

@@ -1002,3 +1002,6 @@ transition: 200ms opacity ease;
   z-index:-100;
   visibility: visible;
 }
+
+.selectedColor { color: #DF7345; }
+.notSelectedColor { color: #A4A4A4; }
