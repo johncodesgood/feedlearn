@@ -168,7 +168,7 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.questionView = false;
     $scope.currentQuestionContent = currentQuestionContent;
     $scope.currentQuestionKey = currentQuestionKey;
-    $scope.replies = $firebaseArray(ref.child('questions').child(currentQuestionKey).child('replies'));
+    $scope.replies = $firebaseArray(ref.child('replies').child(currentQuestionKey));
     $scope.userItemsOnly = false;
     $scope.filterBy = null;
     $scope.sortBy = null;
@@ -226,7 +226,7 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.addReply = function() {
     if ($scope.reply != "") {
       var timestr = getTimeDate();
-      var newReply = {
+      var newReply = { 
         user: $scope.userID, date: timestr, votes: 1, content: $scope.reply, action: "new reply", askedBy: $scope.teacherOrStudent, userVotes: {test: "test"}
       };
       newReply.userVotes[$scope.userID] = true;
@@ -279,7 +279,7 @@ angular.module('myApp.student', ['ngRoute'])
     if (!(replyUser == $scope.userID)) // teacher cannot upvote question they wrote. allow this!
     {
       var ref = new Firebase(FIREBASE_URL);
-      var selectedReplyUserVotesRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey).child('userVotes').child($scope.userID);
+      var selectedReplyUserVotesRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey).child('userVotes').child($scope.userID);
       if (!replyUserVoted) // teacher hasn't upvoted this yet
       {
         var voteType = "reply upvote";
@@ -292,7 +292,7 @@ angular.module('myApp.student', ['ngRoute'])
         replyVotes--;
         selectedReplyUserVotesRef.remove();
       };
-      var selectedReplyRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey);
+      var selectedReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
       selectedReplyRef.update({votes: replyVotes});
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
@@ -314,7 +314,7 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.replyRemove = function(replyKey, replyContent, replyUser) 
   {
     var ref = new Firebase(FIREBASE_URL);
-    var removeReplyRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey);
+    var removeReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
     removeReplyRef.remove();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();

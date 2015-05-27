@@ -29,7 +29,7 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.questionView = false;
     $scope.currentQuestionContent = currentQuestionContent;
     $scope.currentQuestionKey = currentQuestionKey;
-    $scope.replies = $firebaseArray(ref.child('questions').child(currentQuestionKey).child('replies'));
+    $scope.replies = $firebaseArray(ref.child('replies').child(currentQuestionKey));
     $scope.filterBy = null;
     $scope.sortBy = null;
   };
@@ -133,7 +133,7 @@ angular.module('myApp.teacher', ['ngRoute'])
     if (!(replyUser == $scope.userID)) // teacher cannot upvote question they wrote. allow this!
     {
       var ref = new Firebase(FIREBASE_URL);
-      var selectedReplyUserVotesRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey).child('userVotes').child($scope.userID);
+      var selectedReplyUserVotesRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey).child('userVotes').child($scope.userID);
       if (!replyUserVoted) // teacher hasn't upvoted this yet
       {
         var voteType = "reply upvote";
@@ -146,7 +146,7 @@ angular.module('myApp.teacher', ['ngRoute'])
         replyVotes--;
         selectedReplyUserVotesRef.remove();
       };
-      var selectedReplyRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey);
+      var selectedReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
       selectedReplyRef.update({votes: replyVotes});
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
@@ -168,7 +168,7 @@ angular.module('myApp.teacher', ['ngRoute'])
   $scope.replyRemove = function(replyKey, replyContent, replyUser) 
   {
     var ref = new Firebase(FIREBASE_URL);
-    var removeReplyRef = ref.child('questions').child($scope.currentQuestionKey).child('replies').child(replyKey);
+    var removeReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
     removeReplyRef.remove();
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
@@ -203,14 +203,16 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.smileys.$save();
     var refQuestions = new Firebase(FIREBASE_URL + 'questions');
     refQuestions.remove();
+    var refReplies = new Firebase(FIREBASE_URL + 'replies');
+    refReplies.remove();
     var removeUserSmileysRef = ref.child('userSmileys');
     removeUserSmileysRef.set({test: "test"});
     var refCurrentLog = new Firebase(FIREBASE_URL + 'currentlog');
     refCurrentLog.once('value', function(logSnapshot) {
-      var logData = logSnapshot.val();
-      var refSavedLogs = new Firebase(FIREBASE_URL + 'savedlogs');
-      var newSavedLog = refSavedLogs.push(logData);
-      refCurrentLog.remove();
+    var logData = logSnapshot.val();
+    var refSavedLogs = new Firebase(FIREBASE_URL + 'savedlogs');
+    var newSavedLog = refSavedLogs.push(logData);
+    refCurrentLog.remove();
     });
   };
 });

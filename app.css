@@ -39,6 +39,12 @@ hr {
   padding-left: 1%;
 }
 
+a:focus {
+  outline: none;
+  -moz-outline-style: none;
+}
+
+
 .color-green {
   color: #31C28D;
 }

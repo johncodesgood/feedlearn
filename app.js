@@ -6,7 +6,6 @@ angular.module('myApp', [
   'myApp.student',
   'myApp.teacher',
   'myApp.login',
-  'myApp.question',
   'myApp.appfeedback',
   'firebase'
 ])
