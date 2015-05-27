@@ -25,6 +25,7 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.sortBy = null;
   $scope.questionView = true;
   $scope.teacherOrStudent = 'student';
+  $scope.smileyTimeoutValue = 10000;
 
   $scope.selectSmileyCool = function() {
     if ($scope.userSmiley[$scope.userID]) {
@@ -32,24 +33,32 @@ angular.module('myApp.student', ['ngRoute'])
         case "cool":
           $scope.smileys.sumCool--;
           $scope.userSmiley[$scope.userID] = null;
+          $timeout.cancel($scope.smileyTimeoutCool);
           break;
         case "sad":
           $scope.smileys.sumSad--;
           $scope.userSmiley[$scope.userID] = "cool";
           $scope.smileys.sumCool++;
+          $timeout.cancel($scope.smileyTimeoutSad);
+          $scope.smileyTimeoutCool = $timeout($scope.smileyTimerCool, $scope.smileyTimeoutValue);
           break;
         case "lost":
           $scope.smileys.sumLost--;
           $scope.userSmiley[$scope.userID] = "cool";
           $scope.smileys.sumCool++;
+          $timeout.cancel($scope.smileyTimeoutLost);
+          $scope.smileyTimeoutCool = $timeout($scope.smileyTimerCool, $scope.smileyTimeoutValue);
           break;
         case "asleep":
           $scope.smileys.sumAsleep--;
           $scope.userSmiley[$scope.userID] = "cool";
           $scope.smileys.sumCool++;
+          $timeout.cancel($scope.smileyTimeoutAsleep);
+          $scope.smileyTimeoutCool = $timeout($scope.smileyTimerCool, $scope.smileyTimeoutValue);
           break;
       };
     } else {
+      $scope.smileyTimeoutCool = $timeout($scope.smileyTimerCool, $scope.smileyTimeoutValue);
       $scope.userSmiley[$scope.userID] = "cool";
       $scope.smileys.sumCool++;
     };
@@ -68,23 +77,31 @@ angular.module('myApp.student', ['ngRoute'])
           $scope.smileys.sumCool--;
           $scope.userSmiley[$scope.userID] = "sad";
           $scope.smileys.sumSad++;
+          $timeout.cancel($scope.smileyTimeoutCool);
+          $scope.smileyTimeoutSad = $timeout($scope.smileyTimerSad, $scope.smileyTimeoutValue);
           break;
         case "sad":
           $scope.smileys.sumSad--;
           $scope.userSmiley[$scope.userID] = null;
+          $timeout.cancel($scope.smileyTimeoutSad);
           break;
         case "lost":
           $scope.smileys.sumLost--;
           $scope.userSmiley[$scope.userID] = "sad";
           $scope.smileys.sumSad++;
+          $timeout.cancel($scope.smileyTimeoutLost);
+          $scope.smileyTimeoutSad = $timeout($scope.smileyTimerSad, $scope.smileyTimeoutValue);
           break;
         case "asleep":
           $scope.smileys.sumAsleep--;
           $scope.userSmiley[$scope.userID] = "sad";
           $scope.smileys.sumSad++;
+          $timeout.cancel($scope.smileyTimeoutAsleep);
+          $scope.smileyTimeoutSad = $timeout($scope.smileyTimerSad, $scope.smileyTimeoutValue);
           break;
       };
     } else {
+      $scope.smileyTimeoutSad = $timeout($scope.smileyTimerSad, $scope.smileyTimeoutValue);
       $scope.userSmiley[$scope.userID] = "sad";
       $scope.smileys.sumSad++;
     };
@@ -103,23 +120,31 @@ angular.module('myApp.student', ['ngRoute'])
           $scope.smileys.sumCool--;
           $scope.userSmiley[$scope.userID] = "lost";
           $scope.smileys.sumLost++;
+          $timeout.cancel($scope.smileyTimeoutCool);
+          $scope.smileyTimeoutLost = $timeout($scope.smileyTimerLost, $scope.smileyTimeoutValue);
           break;
         case "sad":
           $scope.smileys.sumSad--;
           $scope.userSmiley[$scope.userID] = "lost";
           $scope.smileys.sumLost++;
+          $timeout.cancel($scope.smileyTimeoutSad);
+          $scope.smileyTimeoutLost = $timeout($scope.smileyTimerLost, $scope.smileyTimeoutValue);
           break;
         case "lost":
           $scope.smileys.sumLost--;
           $scope.userSmiley[$scope.userID] = null;
+          $timeout.cancel($scope.smileyTimeoutLost);
           break;
         case "asleep":
           $scope.smileys.sumAsleep--;
           $scope.userSmiley[$scope.userID] = "lost";
           $scope.smileys.sumLost++;
+          $timeout.cancel($scope.smileyTimeoutAsleep);
+          $scope.smileyTimeoutLost = $timeout($scope.smileyTimerLost, $scope.smileyTimeoutValue);
           break;
       };
     } else {
+      $scope.smileyTimeoutLost = $timeout($scope.smileyTimerLost, $scope.smileyTimeoutValue);
       $scope.userSmiley[$scope.userID] = "lost";
       $scope.smileys.sumLost++;
     };
@@ -137,23 +162,31 @@ angular.module('myApp.student', ['ngRoute'])
           $scope.smileys.sumCool--;
           $scope.userSmiley[$scope.userID] = "asleep";
           $scope.smileys.sumAsleep++;
+          $timeout.cancel($scope.smileyTimeoutCool);
+          $scope.smileyTimeoutAsleep = $timeout($scope.smileyTimerAsleep, $scope.smileyTimeoutValue);
           break;
         case "sad":
           $scope.smileys.sumSad--;
           $scope.userSmiley[$scope.userID] = "asleep";
           $scope.smileys.sumAsleep++;
+          $timeout.cancel($scope.smileyTimeoutSad);
+          $scope.smileyTimeoutAsleep = $timeout($scope.smileyTimerAsleep, $scope.smileyTimeoutValue);
           break;
         case "lost":
           $scope.smileys.sumLost--;
           $scope.userSmiley[$scope.userID] = "asleep";
           $scope.smileys.sumAsleep++;
+          $timeout.cancel($scope.smileyTimeoutLost);
+          $scope.smileyTimeoutAsleep = $timeout($scope.smileyTimerAsleep, $scope.smileyTimeoutValue);
           break;
         case "asleep":
           $scope.smileys.sumAsleep--;
           $scope.userSmiley[$scope.userID] = null;
+          $timeout.cancel($scope.smileyTimeoutAsleep);
           break;
       };
     } else {
+      $scope.smileyTimeoutAsleep = $timeout($scope.smileyTimerAsleep, $scope.smileyTimeoutValue);
       $scope.userSmiley[$scope.userID] = "asleep";
       $scope.smileys.sumAsleep++;
     };
@@ -162,6 +195,55 @@ angular.module('myApp.student', ['ngRoute'])
     var currentDateBeforeString = new Date();
     var currentDate = currentDateBeforeString.toString();
     $scope.currentLog.push({date: currentDate, action: "smileyClick", user: $scope.userID, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
+  };
+
+  $scope.smileyTimerCool = function() {
+    console.log('smiley cool');
+    if ($scope.userSmiley[$scope.userID] == 'cool') {
+      $scope.userSmiley[$scope.userID] = null;
+      $scope.smileys.sumCool--;
+      $scope.smileys.$save();
+      $scope.userSmiley.$save();
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "smileyTimeout", user: $scope.userID, smiley: "cool", totalNum: $scope.smileys.sumCool});
+    };
+  };
+
+  $scope.smileyTimerSad = function() {
+    if ($scope.userSmiley[$scope.userID] == 'sad') {
+      $scope.userSmiley[$scope.userID] = null;
+      $scope.smileys.sumSad--;
+      $scope.smileys.$save();
+      $scope.userSmiley.$save();
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "smileyTimeout", user: $scope.userID, smiley: "sad", totalNum: $scope.smileys.sumSad});
+    };
+  };
+
+  $scope.smileyTimerLost = function() {
+    if ($scope.userSmiley[$scope.userID] == 'lost') {
+      $scope.userSmiley[$scope.userID] = null;
+      $scope.smileys.sumLost--;
+      $scope.smileys.$save();
+      $scope.userSmiley.$save();
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "smileyTimeout", user: $scope.userID, smiley: "lost", totalNum: $scope.smileys.sumLost});
+    };
+  };
+
+  $scope.smileyTimerAsleep = function() {
+    if ($scope.userSmiley[$scope.userID] == 'asleep') {
+      $scope.userSmiley[$scope.userID] = null;
+      $scope.smileys.sumAsleep--;
+      $scope.smileys.$save();
+      $scope.userSmiley.$save();
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "smileyTimeout", user: $scope.userID, smiley: "asleep", totalNum: $scope.smileys.sumAsleep});
+    };
   };
 
   $scope.goToReplyView = function(currentQuestionKey, currentQuestionContent) {
