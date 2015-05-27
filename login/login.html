@@ -1,9 +1,20 @@
 <div class="modal-header text-center">
   <h3 class="modal-title">Log In</h3>
 </div>
-<div class="modal-body text-center">
-	<a class="btn btn-fb large fb js-fb-login full-width" ng-click="googleLogin()">Log In with Google</a>
-</div>
-<div class="modal-footer text-center">
+
+<div class="modal-body text-center" style="padding: 20px 15px 20px 15px">
+	<form role="form" class="form-horizontal text-center" name="loginUserForm" novalidate>		
+    	<input style="margin-left: 26px; width: 80%" type="email" class="form-control" id="loginEmail" placeholder="Email" name="loginEmail" ng-model="loginUser.email" tabindex="1" required>
+			<p ng-show="loginUserForm.loginEmail.$invalid && submittedPassword" class="help-block error-red">Enter a valid email address</p>
+    	<input style="margin-top: 20px; margin-left: 26px; width: 80%" type="password" class="form-control" id="loginUserPassword" placeholder="Password" name="loginPassword" ng-model="loginUser.password" tabindex="2" required>
+    	<p ng-show="loginUserForm.loginPassword.$invalid && submittedPassword" class="help-block error-red">Enter a valid password</p>
+			<input type="submit" style="margin-top: 20px" class="btn btn-fb large fb js-fb-login full-width" tabindex="3" ng-click="submitLoginPassword()" value="Log In">
+			<!-- <p ng-show="(loginUserForm.$invalid || errorMessage) && submittedPassword" class="help-block error-red">There are errors</p> -->
+			<p ng-show="errorMessage && submittedPassword" class="help-block error-red" style="margin-top: 10px">{{ errorMessage }}</p>
+			<div class="alert alert-info" style="margin-top: 10px" ng-show="loading">Loading...</div>
+	</form>
 </div>
 
+<div class="modal-footer" style="text-align: center">
+	<a href="" ng-click="newUser()">New User?  Click here to sign up</a>
+</div>

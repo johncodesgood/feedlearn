@@ -6,6 +6,7 @@ angular.module('myApp', [
   'myApp.student',
   'myApp.teacher',
   'myApp.login',
+  'myApp.signup',
   'myApp.appfeedback',
   'firebase'
 ])
@@ -18,22 +19,34 @@ angular.module('myApp', [
     }
   });
   var ref = new Firebase(FIREBASE_URL);
+  var studentUsersRef = ref.child('studentList');
+  studentUsersRef.once('value', function(studentSnapshot) {
+    $rootScope.approvedStudents = studentSnapshot.val();
+    // val now contains the object { first: 'Fred', last: 'Flintstone' }.
+  });
+  var teacherUsersRef = ref.child('teacherList');
+  teacherUsersRef.once('value', function(teacherSnapshot) {
+    $rootScope.approvedTeachers = teacherSnapshot.val();
+    // val now contains the object { first: 'Fred', last: 'Flintstone' }.
+  });
   var authObj = $firebaseAuth(ref);
   authObj.$onAuth(function(authData) {
     console.log("Auth listener: Called");
     if (authData) {
       $rootScope.currentUser = authData;
       $rootScope.smileys = $firebaseObject(ref.child('smileys'));
-      if (authData.uid == "google:110137350934623881673") {
+      if ($rootScope.approvedTeachers.indexOf(authData.password.email) > -1) {
         $rootScope.teacherOrStudent = "teacher";
         $location.path('/teacher');
-      } else {
+      } else if ($rootScope.approvedStudents.indexOf(authData.password.email) > -1) { 
         $rootScope.teacherOrStudent = "student";
         $location.path('/student');
-      }; 
+      } else {
+        $location.path('/');
+      } 
     } else {
       $rootScope.currentUser = null;
-      console.log("Auth listener: No facebook data found");
+      console.log("Auth listener: No data found");
       $location.path('/');
     }
   });
@@ -100,6 +113,20 @@ angular.module('myApp', [
     var modalInstance = $modal.open({
       templateUrl: '/login/login.html',
       controller: 'LoginCtrl',
+      size: 'sm'
+    });
+    modalInstance.result.then(function (authData) {
+      $scope.authData = authData;
+      if (authData == 'signUpInstead') {
+        $scope.openSignup();
+      }
+    });
+  };
+
+  $scope.openSignup = function () {
+    var modalInstance = $modal.open({
+      templateUrl: '/signup/signup.html',
+      controller: 'SignupCtrl',
       size: 'sm'
     });
     modalInstance.result.then(function (authData) {

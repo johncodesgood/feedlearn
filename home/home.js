@@ -23,6 +23,20 @@ angular.module('myApp.home', ['ngRoute','firebase', 'ui.bootstrap'])
     });
     modalInstance.result.then(function (authData) {
       $scope.authData = authData;
+      if (authData == 'signUpInstead') {
+        $scope.openSignup();
+      }
+    });
+  };
+
+  $scope.openSignup = function () {
+    var modalInstance = $modal.open({
+      templateUrl: '/signup/signup.html',
+      controller: 'SignupCtrl',
+      size: 'sm'
+    });
+    modalInstance.result.then(function (authData) {
+      $scope.authData = authData;
     });
   };
 
