@@ -34,6 +34,23 @@ hr {
   }
 }
 
+.container-fluid {
+  padding-right: 1%;
+  padding-left: 1%;
+}
+
+.color-green {
+  color: #31C28D;
+}
+
+.color-red {
+  color: #DF7345;
+}
+
+.color-grey {
+  color: #A4A4A4;
+}
+
 .shadow {
 box-shadow: 1px 1px 8px 0px #ccc;
 -moz-box-shadow: 1px 1px 8px 0px #ccc;
@@ -320,7 +337,7 @@ visibility: hidden;
 }
 
 table {
-  /*height: 100%;*/
+  margin-bottom: 2%;
 }
 
 tr {

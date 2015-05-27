@@ -65,4 +65,44 @@ angular.module('myApp.question', ['ngRoute'])
     };
   };
 
+    $scope.questionUpVote = function(questionKey, questionContent, questionUser, questionUserVoted, questionVotes) 
+  {
+    if (!(questionUser == $scope.userID)) // teacher cannot upvote question they wrote. allow this!
+    {
+      if (!questionUserVoted) // teacher hasn't upvoted this yet
+      {
+        var voteType = "upvote";
+        questionVotes++;
+        var ref = new Firebase(FIREBASE_URL);
+        var selectedQuestionUserVotesRef = ref.child('questions').child(questionKey).child('userVotes').child($scope.userID);
+        selectedQuestionUserVotesRef.set(true);
+        var selectedQuestionRef = ref.child('questions').child(questionKey);
+        selectedQuestionRef.update({votes: questionVotes})
+      } 
+        else // otherwise a downvote
+      { 
+        voteType = "downvote";
+        questionVotes--;
+        var ref = new Firebase(FIREBASE_URL);
+        var selectedQuestionUserVotesRef = ref.child('questions').child(questionKey).child('userVotes').child($scope.userID);
+        selectedQuestionUserVotesRef.remove();
+        var selectedQuestionRef = ref.child('questions').child(questionKey);
+        selectedQuestionRef.update({votes: questionVotes})
+      };
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: questionContent, questioner: questionUser, votes: questionVotes} );
+    };
+  };
+
+  $scope.replyRemove = function(replyKey, replyContent, replyUser) 
+  {
+    var ref = new Firebase(FIREBASE_URL);
+    var removeQuestionRef = ref.child('questions').child(questionKey);
+    removeQuestionRef.remove();
+    var currentDateBeforeString = new Date();
+    var currentDate = currentDateBeforeString.toString();
+    $scope.currentLog.push({date: currentDate, action: "remove", user: $scope.userID, question: questionContent, questioner: questionUser, removedBy: "student"});
+  };
+
 });
