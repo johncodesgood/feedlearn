@@ -137,10 +137,12 @@ angular.module('myApp.teacher', ['ngRoute'])
         var questionIndexForVote = $scope.questions.$indexFor(questionKey);
         if (!$scope.questions[questionIndexForVote].userVotes[$scope.userID]) {
           $scope.questions[questionIndexForVote].votes++;
+          $scope.questions[questionIndexForVote].userVotes[$scope.userID] = true;
           $scope.questions.$save(questionIndexForVote);
           var voteType = "question upvote";
         } else {
           $scope.questions[questionIndexForVote].votes--;
+          $scope.questions[questionIndexForVote].userVotes[$scope.userID] = null;
           $scope.questions.$save(questionIndexForVote);
           var voteType = "question downvote";
         };
@@ -159,10 +161,12 @@ angular.module('myApp.teacher', ['ngRoute'])
         var replyIndexForVote = $scope.replies.$indexFor(replyKey);
         if (!$scope.replies[replyIndexForVote].userVotes[$scope.userID]) {
           $scope.replies[replyIndexForVote].votes++;
+          $scope.replies[replyIndexForVote].userVotes[$scope.userID] = true;
           $scope.replies.$save(replyIndexForVote);
           var voteType = "reply upvote";
         } else {
           $scope.replies[replyIndexForVote].votes--;
+          $scope.replies[replyIndexForVote].userVotes[$scope.userID] = null;
           $scope.replies.$save(replyIndexForVote);
           var voteType = "reply downvote";
         };
@@ -206,6 +210,7 @@ angular.module('myApp.teacher', ['ngRoute'])
     if ($scope.questions.$indexFor(questionKey) >= 0) {  // Check that question still exists
       var questionIndexForSave = $scope.questions.$indexFor(questionKey);
       $scope.questions[questionIndexForSave].saved = true;
+      $scope.questions.$save(questionIndexForSave);
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
       $scope.currentLog.push({date: currentDate, action: "save question", user: $scope.userID, question: questionContent, questioner: questionUser, savedBy: $scope.teacherOrStudent});

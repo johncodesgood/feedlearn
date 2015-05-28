@@ -3,10 +3,10 @@
 </div>
 
 <div class="modal-body text-center" style="padding: 20px 15px 20px 15px">
-	<form role="form" class="form-horizontal text-center" name="signUpUserForm" novalidate>
-    <input style="margin-left: 26px; width: 80%" type="email" class="form-control" id="signUpEmail" placeholder="Email" name="signUpEmail" ng-model="signUpEmailModel" tabindex="1" required>
+	<form role="form" class="form-horizontal text-center center" style="width: 80%" name="signUpUserForm" novalidate>
+    <input type="email" class="form-control" id="signUpEmail" placeholder="Email" name="signUpEmail" ng-model="signUpEmailModel" tabindex="1" required>
     <p ng-show="signUpUserForm.signUpEmail.$invalid && submittedPassword" class="help-block error-red">Enter a valid email address</p>
-    <input style="margin-top: 20px; margin-left: 26px; width: 80%" type="password" class="form-control" id="signUpPassword" placeholder="Password" name="signUpPassword" ng-model="signUpPasswordModel" tabindex="2" required>
+    <input style="margin-top: 20px;" type="password" class="form-control" id="signUpPassword" placeholder="Password" name="signUpPassword" ng-model="signUpPasswordModel" tabindex="2" required>
     <p ng-show="signUpUserForm.signUpPassword.$invalid && submittedPassword" class="help-block error-red">Enter a valid password</p>
 		<input type="submit" style="margin-top: 20px" class="btn btn-fb large fb js-fb-login full-width" tabindex="3" ng-click="submitSignUpPassword()" value="Sign Up With Email">
 		<!-- <p ng-show="(signUpUserForm.$invalid || errorMessage) && submittedPassword" class="help-block error-red">There are errors</p> -->
@@ -15,6 +15,6 @@
 	</form>
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer" style="text-align: center">
 	<a href="" ng-click="alreadyUser()">Aleady a User?  Click here to log in</a>
 </div>

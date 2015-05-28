@@ -36,7 +36,7 @@
           <table class="table table-striped" style="margin-bottom: 2%">
             <tr ng-cloak ng-repeat="question in questions | filter:filterBy | orderBy:sortBy" style="text-align: left">
               <td class="col-xs-9" style="vertical-align: middle">
-                <p style="margin: 0px">{{question.content}}</p>
+                <p style="margin: 0px; white-space: pre-wrap;">{{question.content}}</p>
                 <div style="padding-top: 5px">
                   <p style="float: left; display: inline-block; margin: 0px; color: #A4A4A4; font-size: 12px">{{ question.date}}</p>
                   <div style="float: right">
@@ -82,7 +82,7 @@
           <table class="table table-striped" style="margin-bottom: 2%">
             <tr ng-cloak ng-repeat="reply in replies | filter:filterBy | orderBy:sortBy" style="text-align: left">
               <td class="col-xs-9" style="vertical-align: middle">
-                <p style="margin: 0px">{{ reply.content }}</p>
+                <p style="margin: 0px; white-space: pre-wrap;">{{ reply.content }}</p>
                 <div style="padding-top: 5px">
                   <p style="float: left; display: inline-block; margin: 0px; color: #A4A4A4; font-size: 12px">{{ reply.date }}</p>
                   <div style="float: right">
