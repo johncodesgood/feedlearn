@@ -12,38 +12,43 @@ angular.module('myApp.signup', ['ngRoute'])
   $scope.errorMessage = null;
   $scope.loading = false;
 
+  $scope.alreadyUser = function() {
+    $modalInstance.close('loginInstead');
+  };
+
   $scope.submitSignUpPassword = function() {
     $scope.submittedPassword = true;    
-    if (!$scope.signUpUserForm.$valid) {
-    } else if (!($scope.approvedTeachers.indexOf($scope.signUpEmailModel) > -1) &&
-               !($scope.approvedStudents.indexOf($scope.signUpEmailModel) > -1)) {
-      console.error("Error: unauthorized user");
-      $scope.errorMessage = "You are not an authorized user";
-      $scope.$emit('UNLOAD');
-      $scope.loading = false;
-    } else {
-      $scope.$emit('LOAD');
-      $scope.loading = true;
-      $scope.authObj.$createUser({
-        email: $scope.signUpEmailModel,
-        password: $scope.signUpPasswordModel
-      }).then(function(userData) {
-        console.log('userdata: ', userData.uid);
+    if ($scope.signUpUserForm.$valid) {
+      if (!($scope.approvedTeachers.indexOf($scope.signUpEmailModel) > -1) &&
+          !($scope.approvedStudents.indexOf($scope.signUpEmailModel) > -1)) {
+        console.error("Error: unauthorized user");
+        $scope.errorMessage = "You are not an authorized user";
+        $scope.$emit('UNLOAD');
+        $scope.loading = false;
+      } else {
+        $scope.$emit('LOAD');
+        $scope.loading = true;
+        $scope.authObj.$createUser({
+          email: $scope.signUpEmailModel,
+          password: $scope.signUpPasswordModel
+        }).then(function(userData) {
+          console.log('userdata: ', userData.uid);
           return $scope.authObj.$authWithPassword({
             email: $scope.signUpEmailModel,
             password: $scope.signUpPasswordModel
           });
-      }).then(function(authData) {
-        console.log("Logged in as:", authData.uid);
-        $scope.submittedPassword = false;
-        $modalInstance.close(authData);
-      }).catch(function(error) {
-        console.error("Error: ", error);
-        $scope.errorMessage = error.message;
-        $scope.$emit('UNLOAD');
-        $scope.loading = false;
-      });
-    }    
+        }).then(function(authData) {
+          console.log("Logged in as:", authData.uid);
+          $scope.submittedPassword = false;
+          $modalInstance.close(authData);
+        }).catch(function(error) {
+          console.error("Error: ", error);
+          $scope.errorMessage = error.message;
+          $scope.$emit('UNLOAD');
+          $scope.loading = false;
+        });
+      };
+    };    
   };
 
 }); // SignupCtrl

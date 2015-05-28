@@ -12,28 +12,30 @@ angular.module('myApp.login', ['ngRoute'])
 
   $scope.submitLoginPassword = function () {
     $scope.submittedPassword = true;
-    if (!$scope.loginUserForm.$valid) {
-    } else if (!($scope.approvedTeachers.indexOf($scope.loginUser.email) > -1) &&
-               !($scope.approvedStudents.indexOf($scope.loginUser.email) > -1)) {
-      console.error("Error: unauthorized user");
-      $scope.errorMessage = "You are not an authorized user";
-      $scope.$emit('UNLOAD');
-      $scope.loading = false;
-    } else {
-      $scope.$emit('LOAD');
-      $scope.authObj.$authWithPassword({
-        email    : $scope.loginUser.email,
-        password : $scope.loginUser.password
-      }).then(function(authData) {
-        console.log("Authenticated successfully with payload:", authData);
-        $scope.submittedPassword = false;
-        $modalInstance.close(authData);
-      }).catch(function(error) {
-        console.error("Error: ", error);
-        $scope.errorMessage = error.message;
+    if ($scope.loginUserForm.$valid) {
+      if (!($scope.approvedTeachers.indexOf($scope.loginUser.email) > -1) &&
+          !($scope.approvedStudents.indexOf($scope.loginUser.email) > -1)) {
+        console.error("Error: unauthorized user");
+        $scope.errorMessage = "You are not an authorized user";
         $scope.$emit('UNLOAD');
         $scope.loading = false;
-      });
+      } else {
+        $scope.$emit('LOAD');
+        $scope.loading = true;
+        $scope.authObj.$authWithPassword({
+          email    : $scope.loginUser.email,
+          password : $scope.loginUser.password
+        }).then(function(authData) {
+          console.log("Authenticated successfully with payload:", authData);
+          $scope.submittedPassword = false;
+          $modalInstance.close(authData);
+        }).catch(function(error) {
+          console.error("Error: ", error);
+          $scope.errorMessage = error.message;
+          $scope.$emit('UNLOAD');
+          $scope.loading = false;
+        });
+      };
     };
   };
 

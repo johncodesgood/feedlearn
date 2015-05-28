@@ -25,7 +25,10 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.sortBy = null;
   $scope.questionView = true;
   $scope.teacherOrStudent = 'student';
-  $scope.smileyTimeoutValue = 10000;
+  $scope.radioModelReply = 'LatestReply';
+  $scope.radioModelQuestion = 'LatestQuestion';
+  $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
+  $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
 
   $scope.selectSmileyCool = function() {
     if ($scope.userSmiley[$scope.userID]) {
@@ -254,6 +257,10 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userItemsOnly = false;
     $scope.filterBy = null;
     $scope.sortBy = null;
+    $scope.radioModelReply = 'LatestReply';
+    $scope.radioModelQuestion = 'LatestQuestion';
+    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
+    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
   };
 
   $scope.goToQuestionView = function() {
@@ -262,35 +269,57 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.userItemsOnly = false;
     $scope.filterBy = {saved: false}
     $scope.sortBy = null;
+    $scope.radioModelReply = 'LatestReply';
+    $scope.radioModelQuestion = 'LatestQuestion';
+    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
+    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
   }
 
-  $scope.sortByVotes = function() {
-    if ($scope.questionView) {
-      $scope.filterBy = {saved: false};
-    } else {
-      $scope.filterBy = null;
-    };
+  $scope.sortByVotesQuestion = function() {
+    $scope.filterBy = {saved: false};
     $scope.userItemsOnly = false;
     $scope.sortBy = 'votes';
+    debugger;
+    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
-  $scope.sortByLatest = function() {
-    if ($scope.questionView) {
-      $scope.filterBy = {saved: false};
-    } else {
-      $scope.filterBy = null;
-    };
+  $scope.sortByVotesReply = function() {
+    $scope.filterBy = null;
+    $scope.userItemsOnly = false;
+    $scope.sortBy = 'votes';
+    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+  };
+
+
+  $scope.sortByLatestQuestion = function() {
+    $scope.filterBy = {saved: false};
     $scope.userItemsOnly = false;
     $scope.sortBy = null;
+    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
-  $scope.filterByUser = function() {
+  $scope.sortByLatestReply = function() {
+    $scope.filterBy = null;
+    $scope.userItemsOnly = false;
+    $scope.sortBy = null;
+    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+  };
+
+  $scope.filterByUserQuestion = function() {
     $scope.userItemsOnly = true;
     var userID = $scope.userID;
     $scope.filterBy = {user: userID};
-    $scope.sortBy = 'votes';
+    $scope.sortBy = null;
+    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
+  $scope.filterByUserReply = function() {
+    $scope.userItemsOnly = true;
+    var userID = $scope.userID;
+    $scope.filterBy = {user: userID};
+    $scope.sortBy = null;
+    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+  };
 
   $scope.addQuestion = function() {
     if ($scope.question != "") {

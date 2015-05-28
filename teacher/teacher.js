@@ -24,6 +24,9 @@ angular.module('myApp.teacher', ['ngRoute'])
   $scope.sortBy = 'null';
   $scope.questionView = true;
   $scope.teacherOrStudent = 'teacher';
+  $scope.radioModelReply = 'LatestReply';
+  $scope.radioModelQuestion = 'LatestQuestion';
+
 
   $scope.goToReplyView = function(currentQuestionKey, currentQuestionContent) {
     $scope.questionView = false;
@@ -32,6 +35,9 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.replies = $firebaseArray(ref.child('replies').child(currentQuestionKey));
     $scope.filterBy = null;
     $scope.sortBy = null;
+    $scope.saved = false;
+    $scope.radioModelReply = 'LatestReply';
+    $scope.radioModelQuestion = 'LatestQuestion';
   };
 
   $scope.goToQuestionView = function() {
@@ -39,29 +45,39 @@ angular.module('myApp.teacher', ['ngRoute'])
     $scope.currentQuestion = null;
     $scope.filterBy = {saved: false};
     $scope.sortBy = null;
+    $scope.saved = false;
+    $scope.radioModelReply = 'LatestReply';
+    $scope.radioModelQuestion = 'LatestQuestion';
   }
 
-  $scope.sortByVotes = function() {
-    if ($scope.questionView) {
-      $scope.filterBy = {saved: false};
-    } else {
-      $scope.filterBy = null;
-    };
+  $scope.sortByVotesQuestion = function() {
+    $scope.saved = false;
+    $scope.filterBy = {saved: false};
     $scope.sortBy = 'votes';
   };
 
-  $scope.sortByLatest = function() {
-    if ($scope.questionView) {
-      $scope.filterBy = {saved: false};
-    } else {
-      $scope.filterBy = null;
-    };
+  $scope.sortByVotesReply = function() {
+    $scope.saved = false;
+    $scope.filterBy = null;
+    $scope.sortBy = 'votes';
+  };
+
+  $scope.sortByLatestQuestion = function() {
+    $scope.saved = false;
+    $scope.filterBy = {saved: false};
+    $scope.sortBy = null;
+  };
+
+  $scope.sortByLatestReply = function() {
+    $scope.saved = false;
+    $scope.filterBy = null;
     $scope.sortBy = null;
   };
 
   $scope.filterBySaved = function() {
     $scope.filterBy = {saved: true};
-    $scope.sortBy = 'votes';
+    $scope.sortBy = null;
+    $scope.saved = true;
   };
 
   $scope.addQuestion = function() {

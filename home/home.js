@@ -11,7 +11,6 @@ angular.module('myApp.home', ['ngRoute','firebase', 'ui.bootstrap'])
 })
 
 .controller('HomeCtrl', function($scope, FIREBASE_URL, $modal, $location) {
-	$scope.myInterval = 3000;
 
 	var ref = new Firebase(FIREBASE_URL);
 
@@ -37,6 +36,9 @@ angular.module('myApp.home', ['ngRoute','firebase', 'ui.bootstrap'])
     });
     modalInstance.result.then(function (authData) {
       $scope.authData = authData;
+      if (authData == 'loginInstead') {
+        $scope.openLogin();
+      }
     });
   };
 

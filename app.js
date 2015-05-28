@@ -22,12 +22,17 @@ angular.module('myApp', [
   var studentUsersRef = ref.child('studentList');
   studentUsersRef.once('value', function(studentSnapshot) {
     $rootScope.approvedStudents = studentSnapshot.val();
-    // val now contains the object { first: 'Fred', last: 'Flintstone' }.
+    console.log('student list: ', $rootScope.approvedStudents)
   });
   var teacherUsersRef = ref.child('teacherList');
   teacherUsersRef.once('value', function(teacherSnapshot) {
     $rootScope.approvedTeachers = teacherSnapshot.val();
-    // val now contains the object { first: 'Fred', last: 'Flintstone' }.
+    console.log('teacher list: ', $rootScope.approvedTeachers)
+  });
+  var smileyTimeoutRef = ref.child('smileyTimeout');
+  smileyTimeoutRef.once('value', function(smileyTimeoutSnapshot) {
+    $rootScope.smileyTimeoutValue = smileyTimeoutSnapshot.val();
+    console.log('smiley timeout: ', $rootScope.smileyTimeoutValue)
   });
   var authObj = $firebaseAuth(ref);
   authObj.$onAuth(function(authData) {
@@ -131,6 +136,9 @@ angular.module('myApp', [
     });
     modalInstance.result.then(function (authData) {
       $scope.authData = authData;
+      if (authData == 'loginInstead') {
+        $scope.openLogin();
+      }
     });
   };
 

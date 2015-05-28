@@ -40,9 +40,9 @@
       <div class="row" style="margin-top: 3%">
         <div class="col-xs-12">
           <div class="btn-group btn-group-justified">
-            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModel" btn-radio="'Latest'" ng-click="sortByLatest()" uncheckable>Latest</label>
-            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModel" btn-radio="'Votes'" ng-click="sortByVotes()" uncheckable>Votes</label>
-            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModel" btn-radio="'Saved'" ng-click="filterBySaved()" uncheckable>Saved</label>
+            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModelQuestion" btn-radio="'LatestQuestion'" ng-click="sortByLatestQuestion()">Latest</label>
+            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModelQuestion" btn-radio="'VotesQuestion'" ng-click="sortByVotesQuestion()">Votes</label>
+            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModelQuestion" btn-radio="'SavedQuestion'" ng-click="filterBySaved()">Saved</label>
           </div> <!-- btn-group -->
         </div> <!-- col-xs-12 -->
       </div> <!-- row -->
@@ -56,9 +56,10 @@
                   <p style="float: left; display: inline-block; margin: 0px; color: #A4A4A4; font-size: 12px">{{ question.date}}</p>
                   <div style="float: right">
                     <a style="margin-right: 10px; margin-left: 10px" href="" ng-click="questionRemove(question.$id, question.content, question.user)"><span class="glyphicon glyphicon-remove color-red" style="font-size: 16px"></span></a>
-                    <a style="margin-right: 10px; margin-left: 10px" href="" ng-click="savedQuestion(question.$id, question.content, question.user)"><span class="glyphicon glyphicon-floppy-disk color-grey" style="font-size: 16px"></span></a>
+                    <a ng-if="!saved" style="margin-right: 10px; margin-left: 10px" href="" ng-click="savedQuestion(question.$id, question.content, question.user)"><span class="glyphicon glyphicon-folder-open color-grey" style="font-size: 16px"></span></a>
                     <a style="margin-right: 10px; margin-left: 10px" href="" ng-click="goToReplyView(question.$id, question.content)" class="link-green-highlight"><span class="glyphicon glyphicon-edit" style="color: #A4A4A4; font-size: 16px"></span></a>
-                    <a style="margin-left: 5px; margin-right: 5px" href="" ng-click="questionVote(question.$id, question.content, question.user, question.userVotes[userID], question.votes)"><span ng-class="question.userVotes[userID] ? 'glyphicon glyphicon-chevron-down color-grey' : 'glyphicon glyphicon-chevron-up color-grey'" style="font-size: 16px"></span></a>
+                    <a ng-if="question.user != userID" style="margin-left: 5px; margin-right: 5px" href="" ng-click="questionVote(question.$id, question.content, question.user, question.userVotes[userID], question.votes)"><span ng-class="question.userVotes[userID] ? 'glyphicon glyphicon-chevron-down color-grey' : 'glyphicon glyphicon-chevron-up color-grey'" style="font-size: 16px"></span></a>
+                    <span ng-if="question.user == userID" class="glyphicon glyphicon-user color-green" style="font-size: 16px; margin-left: 5px; margin-right: 5px"></span>
                     <p style="display: inline-block; margin-bottom: 2px; font-size: 14px; color: #A4A4A4">{{question.votes}}</p>
                   </div>
                 </div>
@@ -94,8 +95,8 @@
       <div class="row" style="margin-top: 3%">
         <div class="col-xs-12">
           <div class="btn-group btn-group-justified">
-            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModel" btn-radio="'Latest'" ng-click="sortByLatest()" uncheckable>Latest</label>
-            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModel" btn-radio="'Votes'" ng-click="sortByVotes()" uncheckable>Votes</label>
+            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModelReply" btn-radio="'LatestReply'" ng-click="sortByLatestReply()">Latest</label>
+            <label class="btn btn-grey" style="font-size: 12px; font-weight: 300" ng-model="radioModelReply" btn-radio="'VotesReply'" ng-click="sortByVotesReply()">Votes</label>
           </div>
         </div>
       </div>
@@ -110,7 +111,8 @@
                   <p style="float: left; display: inline-block; margin: 0px; color: #A4A4A4; font-size: 12px">{{ reply.date }}</p>
                   <div style="float: right">
                     <a style="margin-right: 10px; margin-left: 10px" href="" ng-click="replyRemove(reply.$id, reply.content, reply.user)"><span class="glyphicon glyphicon-remove color-red" style="font-size: 16px"></span></a>
-                    <a style="margin-left: 5px; margin-right: 5px" href="" ng-click="replyVote(reply.$id, reply.content, reply.user, reply.userVotes[userID], reply.votes)"><span ng-class="reply.userVotes[userID] ? 'glyphicon glyphicon-chevron-down color-grey' : 'glyphicon glyphicon-chevron-up color-grey'" style="font-size: 16px"></span></a>
+                    <a ng-if="reply.user != userID" style="margin-left: 5px; margin-right: 5px" href="" ng-click="replyVote(reply.$id, reply.content, reply.user, reply.userVotes[userID], reply.votes)"><span ng-class="reply.userVotes[userID] ? 'glyphicon glyphicon-chevron-down color-grey' : 'glyphicon glyphicon-chevron-up color-grey'" style="font-size: 16px"></span></a>
+                    <span ng-if="reply.user == userID" class="glyphicon glyphicon-user color-green" style="font-size: 16px; margin-left: 5px; margin-right: 5px"></span>
                     <p style="display: inline-block; margin-bottom: 2px; font-size: 14px; color: #A4A4A4">{{ reply.votes }}</p>
                   </div>
                 </div>
