@@ -27,8 +27,8 @@ angular.module('myApp.student', ['ngRoute'])
   $scope.teacherOrStudent = 'student';
   $scope.radioModelReply = 'LatestReply';
   $scope.radioModelQuestion = 'LatestQuestion';
-  $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
-  $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+  $("#questionScroll").scrollTop($("#questionScroll")[0].scrollHeight);
+  $("#replyScroll").scrollTop($("#replyScroll")[0].scrollHeight);
 
   $scope.selectSmileyCool = function() {
     if ($scope.userSmiley[$scope.userID]) {
@@ -259,8 +259,8 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.sortBy = null;
     $scope.radioModelReply = 'LatestReply';
     $scope.radioModelQuestion = 'LatestQuestion';
-    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
-    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+    $("#questionScroll").scrollTop($("#questionScroll")[0].scrollHeight);
+    $("#replyScroll").scrollTop($("#replyScroll")[0].scrollHeight);
   };
 
   $scope.goToQuestionView = function() {
@@ -271,23 +271,20 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.sortBy = null;
     $scope.radioModelReply = 'LatestReply';
     $scope.radioModelQuestion = 'LatestQuestion';
-    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
-    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
+    $("#questionScroll").scrollTop($("#questionScroll")[0].scrollHeight);
+    $("#replyScroll").scrollTop($("#replyScroll")[0].scrollHeight);
   }
 
   $scope.sortByVotesQuestion = function() {
     $scope.filterBy = {saved: false};
     $scope.userItemsOnly = false;
     $scope.sortBy = 'votes';
-    debugger;
-    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
   $scope.sortByVotesReply = function() {
     $scope.filterBy = null;
     $scope.userItemsOnly = false;
     $scope.sortBy = 'votes';
-    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
   };
 
 
@@ -295,14 +292,12 @@ angular.module('myApp.student', ['ngRoute'])
     $scope.filterBy = {saved: false};
     $scope.userItemsOnly = false;
     $scope.sortBy = null;
-    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
   $scope.sortByLatestReply = function() {
     $scope.filterBy = null;
     $scope.userItemsOnly = false;
     $scope.sortBy = null;
-    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
   };
 
   $scope.filterByUserQuestion = function() {
@@ -310,7 +305,6 @@ angular.module('myApp.student', ['ngRoute'])
     var userID = $scope.userID;
     $scope.filterBy = {user: userID};
     $scope.sortBy = null;
-    $("#scrollAreaQuestion").scrollTop($("#scrollAreaQuestion")[0].scrollHeight);
   };
 
   $scope.filterByUserReply = function() {
@@ -318,14 +312,13 @@ angular.module('myApp.student', ['ngRoute'])
     var userID = $scope.userID;
     $scope.filterBy = {user: userID};
     $scope.sortBy = null;
-    $("#scrollAreaReply").scrollTop($("#scrollAreaReply")[0].scrollHeight);
   };
 
   $scope.addQuestion = function() {
     if ($scope.question != "") {
       var timestr = getTimeDate();
       var newQuestion = {
-        user: $scope.userID, date: timestr, votes: 1, content: $scope.question, action: "new question", askedBy: $scope.teacherOrStudent, saved: false, userVotes: {test: "test"}
+        user: $scope.userID, date: timestr, votes: 1, content: $scope.question, action: "new question", askedBy: $scope.teacherOrStudent, saved: false, numReplies: 0, userVotes: {test: "test"}
       };
       newQuestion.userVotes[$scope.userID] = true;
       $scope.questions.$add(newQuestion);
@@ -342,6 +335,12 @@ angular.module('myApp.student', ['ngRoute'])
       };
       newReply.userVotes[$scope.userID] = true;
       $scope.replies.$add(newReply);
+      if ($scope.questions.$indexFor($scope.currentQuestionKey) >= 0) {  // Check that question still exists
+        var questionIndexForReply = $scope.questions.$indexFor($scope.currentQuestionKey);
+        $scope.questions[questionIndexForReply].numReplies++;
+        $scope.questions.$save(questionIndexForReply);
+      }
+      // $scope.questions.$save(); 
       $scope.reply = "";
       $scope.currentLog.push(newReply); 
     };
@@ -361,24 +360,20 @@ angular.module('myApp.student', ['ngRoute'])
 
   $scope.questionVote = function(questionKey, questionContent, questionUser, questionUserVoted, questionVotes) 
   {
-    if (!(questionUser == $scope.userID)) // studnet cannot upvote question they wrote
+    if (!(questionUser == $scope.userID)) // student cannot upvote question they wrote
     {
-      var ref = new Firebase(FIREBASE_URL);
-      var selectedQuestionUserVotesRef = ref.child('questions').child(questionKey).child('userVotes').child($scope.userID);
-      if (!questionUserVoted) // student hasn't upvoted this yet
-      {
-        var voteType = "question upvote";
-        questionVotes++;
-        selectedQuestionUserVotesRef.set(true);
-      } 
-        else // otherwise a downvote
-      { 
-        voteType = "question downvote";
-        questionVotes--;
-        selectedQuestionUserVotesRef.remove();
+      if ($scope.questions.$indexFor(questionKey) >= 0) {  // Check that question still exists
+        var questionIndexForVote = $scope.questions.$indexFor(questionKey);
+        if (!$scope.questions[questionIndexForVote].userVotes[$scope.userID]) {
+          $scope.questions[questionIndexForVote].votes++;
+          $scope.questions.$save(questionIndexForVote);
+          var voteType = "question upvote";
+        } else {
+          $scope.questions[questionIndexForVote].votes--;
+          $scope.questions.$save(questionIndexForVote);
+          var voteType = "question downvote";
+        };
       };
-      var selectedQuestionRef = ref.child('questions').child(questionKey);
-      selectedQuestionRef.update({votes: questionVotes});
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
       $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, question: questionContent, questioner: questionUser, votes: questionVotes, votedBy: $scope.teacherOrStudent} );
@@ -389,22 +384,18 @@ angular.module('myApp.student', ['ngRoute'])
   {
     if (!(replyUser == $scope.userID)) // teacher cannot upvote question they wrote. allow this!
     {
-      var ref = new Firebase(FIREBASE_URL);
-      var selectedReplyUserVotesRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey).child('userVotes').child($scope.userID);
-      if (!replyUserVoted) // teacher hasn't upvoted this yet
-      {
-        var voteType = "reply upvote";
-        replyVotes++;
-        selectedReplyUserVotesRef.set(true);
-      } 
-        else // otherwise a downvote
-      { 
-        voteType = "reply downvote";
-        replyVotes--;
-        selectedReplyUserVotesRef.remove();
+      if ($scope.replies.$indexFor(replyKey) >= 0) {  // Check that reply still exists
+        var replyIndexForVote = $scope.replies.$indexFor(replyKey);
+        if (!$scope.replies[replyIndexForVote].userVotes[$scope.userID]) {
+          $scope.replies[replyIndexForVote].votes++;
+          $scope.replies.$save(replyIndexForVote);
+          var voteType = "reply upvote";
+        } else {
+          $scope.replies[replyIndexForVote].votes--;
+          $scope.replies.$save(replyIndexForVote);
+          var voteType = "reply downvote";
+        };
       };
-      var selectedReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
-      selectedReplyRef.update({votes: replyVotes});
       var currentDateBeforeString = new Date();
       var currentDate = currentDateBeforeString.toString();
       $scope.currentLog.push({date: currentDate, action: voteType, user: $scope.userID, reply: replyContent, replier: replyUser, votes: replyVotes, votedBy: $scope.teacherOrStudent} );
@@ -414,22 +405,30 @@ angular.module('myApp.student', ['ngRoute'])
 
   $scope.questionRemove = function(questionKey, questionContent, questionUser) 
   {
-    var ref = new Firebase(FIREBASE_URL);
-    var removeQuestionRef = ref.child('questions').child(questionKey);
-    removeQuestionRef.remove();
-    var currentDateBeforeString = new Date();
-    var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, action: "remove question", user: $scope.userID, question: questionContent, questioner: questionUser, removedBy: $scope.teacherOrStudent});
+    if ($scope.questions.$indexFor(questionKey) >= 0) {  // Check that question still exists
+      var questionIndexForRemove = $scope.questions.$indexFor(questionKey);
+      $scope.questions.$remove(questionIndexForRemove);
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "remove question", user: $scope.userID, question: questionContent, questioner: questionUser, removedBy: $scope.teacherOrStudent});
+    };
   };
+
 
   $scope.replyRemove = function(replyKey, replyContent, replyUser) 
   {
-    var ref = new Firebase(FIREBASE_URL);
-    var removeReplyRef = ref.child('replies').child($scope.currentQuestionKey).child(replyKey);
-    removeReplyRef.remove();
-    var currentDateBeforeString = new Date();
-    var currentDate = currentDateBeforeString.toString();
-    $scope.currentLog.push({date: currentDate, action: "remove reply", user: $scope.userID, reply: replyContent, replier: replyUser, removedBy: $scope.teacherOrStudent});
+    if ($scope.replies.$indexFor(replyKey) >= 0) {  // Check that question still exists
+      var replyIndexForRemove = $scope.replies.$indexFor(replyKey);
+      $scope.replies.$remove(replyIndexForRemove);
+      var currentDateBeforeString = new Date();
+      var currentDate = currentDateBeforeString.toString();
+      $scope.currentLog.push({date: currentDate, action: "remove reply", user: $scope.userID, reply: replyContent, replier: replyUser, removedBy: $scope.teacherOrStudent});
+    };
+    if ($scope.questions.$indexFor($scope.currentQuestionKey) >= 0) {  // Check that question still exists
+      var questionIndexForReply = $scope.questions.$indexFor($scope.currentQuestionKey);
+      $scope.questions[questionIndexForReply].numReplies--;
+      $scope.questions.$save(questionIndexForReply);
+    };
   };
 
 });

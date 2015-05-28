@@ -103,6 +103,16 @@ angular.module('myApp', [
     }
   }
 })
+.directive("scrollBottom", function(){
+    return {
+        link: function(scope, element, attr){
+            var $id= $("#" + attr.scrollBottom);
+            $(element).on("click", function(){
+                $id.scrollTop($id[0].scrollHeight);
+            });
+        }
+    }
+})
 .controller("LoadingCtrl", function($scope) {
   $scope.$on('LOAD', function(){$scope.loading = true});
   $scope.$on('UNLOAD', function(){$scope.loading = false});
