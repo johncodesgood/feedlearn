@@ -60,7 +60,8 @@ angular.module('myApp', [
   $routeProvider.otherwise({redirectTo: '/'});
   $locationProvider.html5Mode(true);
 })
-.constant('FIREBASE_URL', 'https://feedforward.firebaseio.com/')
+.constant('FIREBASE_URL', 'https://feedforwardnew.firebaseio.com/')
+// .constant('FIREBASE_URL', 'https://feedforward.firebaseio.com/')
 .factory("CurrentAuth", function($firebaseAuth, FIREBASE_URL) {
   console.log("CurrentAuth factory called");
   var refAuth = new Firebase(FIREBASE_URL);
